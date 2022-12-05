@@ -15,7 +15,7 @@ namespace Projet_S3_POO
         {
             this.langue = langue;
             this.longeur = longeur;
-            dictionary = AddAllWords(longeur);
+            dictionary = AddAllWords(longeur); 
         }
         
         public void Add(string mot)

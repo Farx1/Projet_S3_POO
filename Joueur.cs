@@ -4,7 +4,7 @@ namespace Projet_S3_POO
 {
     public class Joueur
     {
-        private string name;
+        private string name; 
         private string[] wordsfound;
         private int score;
         private string[] history;

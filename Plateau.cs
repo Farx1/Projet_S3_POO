@@ -17,7 +17,7 @@ namespace Projet_S3_POO
             this.ligne = ligne;
             this.niveaudiff = niveaudiff;
             this.plateau = new char[ligne, colonne];
-            this.listeMots = new List<string>();
+            this.listeMots = new List<string>(); 
         }
 
         public char[,] DefPlateau()
