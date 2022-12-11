@@ -19,11 +19,7 @@ namespace Projet_S3_POO
             this.plateau = new char[ligne, colonne];
             this.listeMots = new List<string>(); 
         }
-
-        public char[,] DefPlateau()
-        {
-            
-        }
+        
 
         public override string ToString()
         {

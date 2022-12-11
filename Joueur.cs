@@ -9,13 +9,13 @@ namespace Projet_S3_POO
         private int score;
         private string[] history;
         
-        public Joueur(string name, string[] wordsfound, int score)
+        public Joueur(string name, string[] wordsfound, int score, string[] history)
         {
             this.name = name;
             this.wordsfound = wordsfound;
             this.score = score;
+            this.history = history;
         }
-        
         public string Name
         {
             get { return name; }
