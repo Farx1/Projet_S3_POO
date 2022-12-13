@@ -1,54 +1,38 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Projet_S3_POO
 {
     public class Joueur
     {
-        private string name; 
-        private string[] wordsfound;
-        private int score;
+        private string name;
+        public List<string> wordsFound;
         private string[] history;
         
-        public Joueur(string name, string[] wordsfound, int score, string[] history)
+
+        public Joueur()
         {
-            this.name = name;
-            this.wordsfound = wordsfound;
-            this.score = score;
-            this.history = history;
-        }
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
+            wordsFound = new List<string>();
+            Score = 0;
         }
         
-        public string[] Wordsfound
-        {
-            get { return wordsfound; }
-            set { wordsfound = value; }
-        }
         
-        public int Score
-        {
-            get { return score; }
-            set { score = value; }
-        }
-        
+        public int Score { get; private set; }
+
         public string[] History
         {
-            get { return history; }
-            set { history = value; }
+            get => history;
+            set => history = value;
         }
 
         public void AddScore(int score)
         {
-            this.score += score;
+            this.Score += score;
         }
-
-        public void AddWordsfound(string word)
+        
+        public void AddWord(string word)
         {
-            Array.Resize(ref wordsfound, wordsfound.Length + 1);
-            wordsfound[wordsfound.Length - 1] = word;
+            wordsFound.Add(word);
         }
 
         public void AddHistory(string word)
@@ -59,15 +43,15 @@ namespace Projet_S3_POO
 
         public void DisplayScore()
         {
-            Console.WriteLine("Score : " + score);
+            Console.WriteLine("Score : " + Score);
         }
 
         public void DisplayWordsfound()
         {
             Console.WriteLine("Mots trouvés : ");
-            for (int i = 0; i < wordsfound.Length; i++)
+            for (int i = 0; i < wordsFound.Count; i++)
             {
-                Console.WriteLine(wordsfound[i]);
+                Console.WriteLine(wordsFound[i]);
             }
         }
 
@@ -82,7 +66,7 @@ namespace Projet_S3_POO
         
         public override string ToString()
         {
-            return "Joueur " + this.name + " a un score de " + this.score + " points.";
+            return "Joueur " + this.name + " a un score de " + this.Score + " points.";
         }
     }
 }

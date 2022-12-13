@@ -18,6 +18,8 @@ namespace Projet_S3_POO
             dictionary = AddAllWords(longeur); 
         }
         
+        
+        
         public void Add(string mot)
         {
             if (mot.Length == longeur)
@@ -26,7 +28,7 @@ namespace Projet_S3_POO
             }
         }
 
-        public string toString()
+        public override string ToString()
         {
             return "Le dictionnaire contient " + dictionary.Count + " mots de " + longeur + " lettres en " + (langue == 0 ? "anglais" : "français");
         }
@@ -36,21 +38,21 @@ namespace Projet_S3_POO
             var term = new List<string>();
             if (langue == 0)
             {
-                var ligne = CatchFile(@"..\..\MotsAnglais.txt").ToArray();
+                var ligne = ReadFile(@"../../MotsAnglais.txt").ToArray();
                 var readligne = ligne[(2*longeur)-3];
                 var dicofinal = readligne.Split(' ').ToList();
                 term = dicofinal;
             }
             else
             {
-                var ligne = CatchFile(@"..\..\MotsFrançais.txt").ToArray();
+                var ligne = ReadFile(@"../../MotsFrançais.txt").ToArray();
                 var readligne = ligne[(2*longeur)-3];
                 var dicofinal = readligne.Split(' ').ToList();
                 term = dicofinal;
             }
             return term;
         }
-        public static IEnumerable<string> CatchFile(string path)
+        public static IEnumerable<string> ReadFile(string path)
         {
             var lignes = new Stack<string>();
             try
@@ -67,7 +69,6 @@ namespace Projet_S3_POO
                 Console.WriteLine("Le fichier n'as pas pu être lu, veuillez réessayer");
                 Console.WriteLine(e.Message);
                 throw new IOException();
-
             }
 
             return lignes.ToArray().Reverse();
@@ -78,7 +79,7 @@ namespace Projet_S3_POO
             return dictionary[index];
         }
         
-          public int Count()
+        public int Count()
         {
             return dictionary.Count;
         }  
@@ -93,7 +94,7 @@ namespace Projet_S3_POO
             get { return longeur; }
         }
         
-        public override string ToString()
+        public string Display()
         {
             string str = "";
             foreach (var mot in dictionary)
@@ -112,9 +113,8 @@ namespace Projet_S3_POO
             else
             {
                 int longueur = mot.Length;
-                int min = 0;
                 int max = longueur - 1;
-                int milieu = (min + max) / 2;
+                int milieu = (0 + max) / 2;
                 if (mot == Get(milieu))
                 {
                     return true;
