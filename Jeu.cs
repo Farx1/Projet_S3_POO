@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Projet_S3_POO
 {
@@ -30,42 +31,93 @@ namespace Projet_S3_POO
         public void Turn()
         {
             Console.Clear();
-            plateau.DisplayGridWithAnswers();//Can also use DisplayGridWithAnswers() to see the answers
-            DateTime end = DateTime.Now.AddSeconds(60);
+            plateau.DisplayGrid();//Can also use DisplayGridWithAnswers() to see the answers
+            DateTime end = DateTime.Now.AddMinutes(1);
             while (DateTime.Now < end)
             {
-                Console.WriteLine("Tour du joueur " + currentPlayer);
-                Console.WriteLine("La case en haut à gauche est la case (0,0)");
-                Console.WriteLine("Merci de rentrer un mot:");
+                Console.WriteLine("      " + "Il vous reste " + (DateTime.Compare(end,DateTime.Now)) + " secondes");
+                Console.WriteLine("      "+"Tour du joueur " + currentPlayer);
+                Console.Write("      "+"Merci de rentrer un mot: ");
                 string mot = Console.ReadLine();
+                
                 mot = mot?.ToUpper();
-                Console.WriteLine("Entrez la ligne de la première lettre : ");
+
+                Console.Write("      " + "Entrez la");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write(" ligne");
+                Console.ResetColor();
+                Console.Write(" de la première lettre : ");
                 int y = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-                Console.WriteLine("Entrez la colonne de la première lettre : ");
+                
+                
+                
+                Console.Write("      " + "Entrez la");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(" colonne");
+                Console.ResetColor();
+                Console.Write(" de la première lettre : ");
                 int x = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-                Console.WriteLine("Entrez la direction du mot (N S E W etc...: ");
+                
+                
+                
+                Console.Write("      "+"Entrez la direction du mot (N S E W etc...): ");
                 string direction = Console.ReadLine();
-                if(plateau.CheckWordPosition(x, y, mot, direction)) @plateau.MarkWord(x, y, mot, direction);
-                else
+                Console.WriteLine();
+                if (plateau.CheckWordPosition(x, y, mot, direction)&& currentPlayer == 1)
                 {
-                    Console.WriteLine("Le mot n'est pas valide");
-                    break;
-                }
-                Console.WriteLine("Vous avez trouvé un mot !");
-                if (currentPlayer == 1)
-                {
-                    currentPlayer = 2;
+                    @plateau.MarkWord(x, y, mot, direction);
+                    if (DateTime.Now >= end)
+                    {
+                        currentPlayer = 2;
+                    }
                     joueur1.AddScore(mot.Length);
                     joueur1.AddWord(mot);
+                    Console.WriteLine("      "+"Vous avez trouvé un mot !");
+                    Console.Write("      "+"Appuyez sur une touche pour continuer");
+                    Console.ReadKey();
+                    Console.WriteLine("");
+
+
                 }
-                else
+                else if(currentPlayer !=2)
                 {
-                    currentPlayer = 1;
+                    Console.WriteLine("      "+"Le mot n'est pas valide");
+                    Console.Write("      "+"Appuyez sur une touche pour continuer");
+                    Console.ReadKey();
+                    break;
+                }
+                
+                if (plateau.CheckWordPosition(x, y, mot, direction)&& currentPlayer == 2)
+                {
+                    @plateau.MarkWord(x, y, mot, direction);
+                    if (DateTime.Now >= end)
+                    {
+                        currentPlayer = 1;
+                    }
                     joueur2.AddScore(mot.Length);
                     joueur2.AddWord(mot);
+                    Console.WriteLine("      "+"Vous avez trouvé un mot !");
+                    Console.Write("      "+"Appuyez sur une touche pour continuer");
+                    Console.ReadKey();
+                    Console.WriteLine("");
                 }
+                else if(currentPlayer != 1)
+                {
+                    Console.WriteLine("      "+"Le mot n'est pas valide");
+                    Console.Write("      "+"Appuyez sur une touche pour continuer");
+                    Console.ReadKey();
+                    break;
+                }
+
+                Console.WriteLine("");
+                Console.Write("      "+"Appuyez sur une touche pour continuer votre tours");
+                Console.ReadKey();
                 break;
             }
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("");
+            Console.WriteLine("      "+"Le temps est écoulé");
+            Console.ResetColor();
             turn++;
         }
         /// <summary>
@@ -86,6 +138,22 @@ namespace Projet_S3_POO
             if (joueur1.Score > joueur2.Score) Console.WriteLine("Le joueur 1 a gagné !");
             else if (joueur1.Score < joueur2.Score) Console.WriteLine("Le joueur 2 a gagné !");
             else Console.WriteLine("Egalité !");
+            
+        }
+
+        public static void Timer()
+        {
+            //fais moi un programme qui affiche un timer en c# à une ligne donnée sans modifier le reste
+            DateTime end = DateTime.Now.AddMinutes(1);
+            while (DateTime.Now < end)
+            {
+                var test = Console.CursorTop;
+                Console.SetCursorPosition(6, test+1);
+                Console.Write("Il vous reste " + (end - DateTime.Now).Seconds + " secondes");
+                Thread.Sleep(1000);
+                Console.SetCursorPosition(6, test-1);
+            }
+            Console.WriteLine("Le temps est écoulé");
             
         }
     }

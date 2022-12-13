@@ -574,23 +574,50 @@ namespace Projet_S3_POO
         /// </summary>
         public void DisplayGrid()
         {
+            Console.WriteLine("\n");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write("      X");
+            Console.ForegroundColor = ConsoleColor.Red;
+            for(int k=0; k<width; k++)
+            {
+                if (k<=10)
+                {
+                    Console.Write("  " + k);
+                }
+                else
+                {
+                    Console.Write(" " + k);
+                }
+            }
+            Console.WriteLine();
             for (int i = 0; i < height; i++)
             {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                if (height > 9 || width > 9)
+                {
+                    if(i<10)Console.Write("      "+(i)+"  ");
+                    else Console.Write("      "+(i)+" ");
+                }
+                else Console.Write("     "+(i)+" ");
+                Console.ResetColor();
                 for (int j = 0; j < width; j++)
                 {
                     if (foundGrid[i, j])
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write(grid[i, j] + " ");
+                        if(height >9|| width>9 ) Console.Write(" ");
                         Console.ResetColor();
                     }
                     else
                     {
                         Console.Write(grid[i, j] + " ");
+                        if(height >9|| width>9 ) Console.Write(" ");
                     }
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine("\n"+"\n");
         }
         
         /// <summary>
@@ -598,8 +625,21 @@ namespace Projet_S3_POO
         /// </summary>
         public void DisplayGridWithAnswers()
         {
+            Console.WriteLine("\n");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("      X");
+            Console.ForegroundColor = ConsoleColor.Red;
+            for(int k=0; k<width; k++)
+            {
+                Console.Write(" " + k);
+            }
+            Console.WriteLine();
             for (int i = 0; i < height; i++)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
+                if(i<10) Console.Write("      "+(i)+" ");
+                else Console.Write("     "+(i)+" ");
+                Console.ResetColor();
                 for (int j = 0; j < width; j++)
                 {
                     if (wordGrid[i, j] != '\0')
@@ -615,6 +655,7 @@ namespace Projet_S3_POO
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine("\n"+"\n");
         }
         
         /// <summary>
