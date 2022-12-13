@@ -7,34 +7,59 @@ namespace Projet_S3_POO
 {
     public static class Functions
     {
-
+        private static Random rand;
+        /// <summary>
+        /// Get a random number between min and max
+        /// </summary>
+        /// <param name="min"></param> Minimum value
+        /// <param name="max"></param> Maximum value
+        /// <returns></returns>
         public static int GetRandomInt(int min, int max)
         {
-            var random = new Random();
-            return random.Next(min, max);
+            return rand.Next(min, max);
         }
-        
+        /// <summary>
+        /// Initialize the random number generator
+        /// </summary>
+        public static void InitRandom()
+        {
+            rand = new Random();
+        }
+        /// <summary>
+        /// Return a random letter of the alphabet
+        /// </summary>
+        /// <returns></returns>
         public static char RandomLetter()
         {
-            Random random = new Random();
-            int randomLetter = random.Next(0, 26);
-            char letter = (char)('a' + randomLetter);
+            int randomLetter = GetRandomInt(0, 26);
+            char letter = Convert.ToChar('a' + randomLetter);
             return char.ToUpper(letter);
         }
-
+        /// <summary>
+        /// Clear the console
+        /// </summary>
         public static void ClearConsole()
         {
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Clear();
         }
-
+        /// <summary>
+        /// Return inputed words after a specific message
+        /// </summary>
+        /// <param name="message"></param> Message to display
+        /// <returns></returns>
         public static string Prompt(string message)
         {
             Console.WriteLine(message);
             return Console.ReadLine();
         }
-
+        /// <summary>
+        /// Same function ReadFile as in the dictionary class for debug purposes
+        /// </summary>
+        /// <param name="path"></param> Path of the file
+        /// <returns></returns>
+        /// <exception cref="IOException"></exception>
         public static IEnumerable<string> ReadFile(string path)
         {
             var lines = new Stack<string>();
@@ -57,7 +82,12 @@ namespace Projet_S3_POO
 
             return lines.ToArray().Reverse();
         }
-
+        /// <summary>
+        /// Write a file with a specific path and content
+        /// </summary>
+        /// <param name="lines"></param> Content of the file
+        /// <param name="path"></param> Path of the file
+        /// <exception cref="IOException"></exception>
         public static void WriteFile(IEnumerable<string> lines, string path)
         {
             try

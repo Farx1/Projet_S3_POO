@@ -4,3 +4,4 @@ C:\Users\jules\Desktop\ALGO S3\Projet_S3_POO\Projet_S3_POO\obj\Debug\Projet_S3_P
 C:\Users\jules\Desktop\ALGO S3\Projet_S3_POO\Projet_S3_POO\obj\Debug\Projet_S3_POO.csproj.CoreCompileInputs.cache
 C:\Users\jules\Desktop\ALGO S3\Projet_S3_POO\Projet_S3_POO\obj\Debug\Projet_S3_POO.exe
 C:\Users\jules\Desktop\ALGO S3\Projet_S3_POO\Projet_S3_POO\obj\Debug\Projet_S3_POO.pdb
+C:\Users\jules\Desktop\ALGO S3\Projet_S3_POO\Projet_S3_POO\obj\Debug\Projet_S3_POO.csproj.SuggestedBindingRedirects.cache

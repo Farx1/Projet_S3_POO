@@ -18,8 +18,6 @@ namespace Projet_S3_POO
             dictionary = AddAllWords(longeur); 
         }
         
-        
-        
         public void Add(string mot)
         {
             if (mot.Length == longeur)
@@ -32,7 +30,11 @@ namespace Projet_S3_POO
         {
             return "Le dictionnaire contient " + dictionary.Count + " mots de " + longeur + " lettres en " + (langue == 0 ? "anglais" : "français");
         }
-
+        /// <summary>
+        /// Return a list of all the words in a specified dictionary
+        /// </summary>
+        /// <param name="longeur"></param> The length of the words
+        /// <returns></returns>
         public List<string> AddAllWords(int longeur)
         {
             var term = new List<string>();
@@ -52,6 +54,12 @@ namespace Projet_S3_POO
             }
             return term;
         }
+        /// <summary>
+        /// Will read a file and return a list of string
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        /// <exception cref="IOException"></exception>
         public static IEnumerable<string> ReadFile(string path)
         {
             var lignes = new Stack<string>();
@@ -93,7 +101,10 @@ namespace Projet_S3_POO
         {
             get { return longeur; }
         }
-        
+        /// <summary>
+        /// Display the dictionary
+        /// </summary>
+        /// <returns></returns>
         public string Display()
         {
             string str = "";
@@ -103,29 +114,33 @@ namespace Projet_S3_POO
             }
             return str;
         }
-        
-        public bool RechDichoRecursif(string mot)
+        /// <summary>
+        /// Search a word in the dictionary
+        /// </summary>
+        /// <param name="word"></param> The word to search
+        /// <returns></returns>
+        public bool RechDichoRecursif(string word)
         {
-            if (mot.Length != longeur)
+            if (word.Length != longeur)
             {
                 return false;
             }
             else
             {
-                int longueur = mot.Length;
+                int longueur = word.Length;
                 int max = longueur - 1;
                 int milieu = (0 + max) / 2;
-                if (mot == Get(milieu))
+                if (word == Get(milieu))
                 {
                     return true;
                 }
                 else
                 {
-                    if (mot.CompareTo(Get(milieu)) > 0)
+                    if (word.CompareTo(Get(milieu)) > 0)
                     {
                         for (int i = milieu; i < longueur; i++)
                         {
-                            if (mot == Get(i))
+                            if (word == Get(i))
                             {
                                 return true;
                             }
@@ -135,7 +150,7 @@ namespace Projet_S3_POO
                     {
                         for (int i = milieu; i >= 0; i--)
                         {
-                            if (mot == Get(i))
+                            if (word == Get(i))
                             {
                                 return true;
                             }

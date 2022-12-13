@@ -13,6 +13,7 @@ namespace Projet_S3_POO
         private int turn;
         private int currentPlayer;
         
+        
         public Jeu(int lang, int difficulty)
         {
             joueur1 = new Joueur();
@@ -22,24 +23,27 @@ namespace Projet_S3_POO
         }
 
 
-        //Ask the player for a word, coordinates and direction
+        /// <summary>
+        /// Ask the player for a word, coordinates and direction
+        /// </summary>
+        /// <exception cref="InvalidOperationException"></exception>
         public void Turn()
         {
             Console.Clear();
-            plateau.DisplayGrid();
+            plateau.DisplayGridWithAnswers();//Can also use DisplayGridWithAnswers() to see the answers
             DateTime end = DateTime.Now.AddSeconds(60);
             while (DateTime.Now < end)
             {
                 Console.WriteLine("Tour du joueur " + currentPlayer);
-                
-                Console.WriteLine("Merci de rentrer un mot");
+                Console.WriteLine("La case en haut à gauche est la case (0,0)");
+                Console.WriteLine("Merci de rentrer un mot:");
                 string mot = Console.ReadLine();
                 mot = mot?.ToUpper();
                 Console.WriteLine("Entrez la ligne de la première lettre : ");
                 int y = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
                 Console.WriteLine("Entrez la colonne de la première lettre : ");
                 int x = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-                Console.WriteLine("Entrez la direction du mot : ");
+                Console.WriteLine("Entrez la direction du mot (N S E W etc...: ");
                 string direction = Console.ReadLine();
                 if(plateau.CheckWordPosition(x, y, mot, direction)) @plateau.MarkWord(x, y, mot, direction);
                 else
@@ -64,7 +68,9 @@ namespace Projet_S3_POO
             }
             turn++;
         }
-
+        /// <summary>
+        /// Initialize the game and start the turns until the end of the game
+        /// </summary>
         public void Start()
         {
             currentPlayer = 1;

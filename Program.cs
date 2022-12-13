@@ -6,6 +6,7 @@ namespace Projet_S3_POO
     {
         public static void Main(string[] args)
         {
+            Functions.InitRandom();
             //Menu for choosing language (English or French) and difficulty from 1 to 5
             Console.WriteLine("Choose your language 0 for English and 1 for French");
             int language = Convert.ToInt32(Console.ReadLine());

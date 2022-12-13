@@ -186,13 +186,18 @@ namespace Projet_S3_POO
                 }
             }
         }
-        
+        /// <summary>
+        /// Load a save from a path file
+        /// </summary>
+        /// <param name="path"></param>
         public Plateau(string path)
         {
             LoadDictionnaries(0);
             LoadSave(path);
         }
-        
+        /// <summary>
+        /// Display all the words in the wordlist
+        /// </summary>
         public void DisplayWordList()
         {
             Console.WriteLine("Liste des mots :");
@@ -201,7 +206,12 @@ namespace Projet_S3_POO
                 Console.WriteLine(word);
             }
         }
-
+        /// <summary>
+        /// Check if a new word is in the grid for all directions
+        /// </summary>
+        /// <param name="x"></param> X position of the first letter
+        /// <param name="y"></param> Y position of the first letter
+        /// <returns></returns>
         private string GetWord(int x, int y)
         {
             string word;
@@ -267,7 +277,14 @@ namespace Projet_S3_POO
             return "Le tableau est de taille " + height+"x"+width + " et de niveau de difficulté " + difficultyLevel+"et il y a "+worldList.Count+" mots à trouver.";
         }
 
-        //Check if word overlaps with other words, if the intersection is with the same letter
+        /// <summary>
+        /// Check if word overlaps with other words, if the intersection is with the same letter
+        /// </summary>
+        /// <param name="x"></param> X position of the word
+        /// <param name="y"></param> Y position of the word
+        /// <param name="world"></param> Word to check
+        /// <param name="direction"></param> Direction of the word
+        /// <returns></returns>
         public bool CheckWordPosition(int x, int y, string world, string direction)
         {
             switch (direction)
@@ -380,7 +397,13 @@ namespace Projet_S3_POO
             return true;
         }
         
-        //Mark a word as found on the grid
+        /// <summary>
+        /// Mark a word on the grid in the specified direction and at the specified position
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="world"></param>
+        /// <param name="direction"></param>
         public void MarkWord(int x, int y, string world, string direction)
         {
             switch (direction)
@@ -437,7 +460,13 @@ namespace Projet_S3_POO
         }
 
 
-        //Place word in a grid with a direction
+        /// <summary>
+        /// Place a word on the grid at a given position and direction
+        /// </summary>
+        /// <param name="x"></param> x position
+        /// <param name="y"></param> y position
+        /// <param name="world"></param> word to place
+        /// <param name="direction"></param> direction of the word
         private void PlaceWorld(int x, int y, string world, string direction)
         {
             switch (direction)
@@ -500,36 +529,36 @@ namespace Projet_S3_POO
                     break;
             }
         }
-        
-        //Generate grid with difficulty level. 1 = (S, E), 2 = (S, E, W, N), 3 = (S, E, W, N, SW), 4 = (S, E, W, N, SW, SE); 5 = (S, E, W, N, NE, NW, SW, SE)
+        /// <summary>
+        /// Generate grid with difficulty level. 1 = (S, E), 2 = (S, E, W, N), 3 = (S, E, W, N, SW), 4 = (S, E, W, N, SW, SE); 5 = (S, E, W, N, NE, NW, SW, SE)
+        /// </summary>
         private void GenerateGrid()
         {
-            var random = new Random();
             var directions = new [] {"S", "E", "W", "N", "SW", "SE", "NE", "NW"};
             foreach (string world in worldList)
             {
                 bool placed = false;
                 while (!placed)
                 {
-                    int x = random.Next(0, width);
-                    int y = random.Next(0, height);
+                    int x = Functions.GetRandomInt(0, width);
+                    int y = Functions.GetRandomInt(0, height);
                     string direction = "";
                     switch (difficultyLevel)
                     {
                         case 1:
-                            direction = directions[random.Next(0, 2)];
+                            direction = directions[Functions.GetRandomInt(0, 2)];
                             break;
                         case 2:
-                            direction = directions[random.Next(0, 4)];
+                            direction = directions[Functions.GetRandomInt(0, 4)];
                             break;
                         case 3:
-                            direction = directions[random.Next(0, 6)];
+                            direction = directions[Functions.GetRandomInt(0, 6)];
                             break;
                         case 4:
-                            direction = directions[random.Next(0, 8)];
+                            direction = directions[Functions.GetRandomInt(0, 8)];
                             break;
                         case 5:
-                            direction = directions[random.Next(0, 8)];
+                            direction = directions[Functions.GetRandomInt(0, 8)];
                             break;
                     }
                     if (CheckWordPosition(x, y, world, direction))
@@ -540,7 +569,9 @@ namespace Projet_S3_POO
                 }
             }
         }
-        
+        /// <summary>
+        /// Display the grid
+        /// </summary>
         public void DisplayGrid()
         {
             for (int i = 0; i < height; i++)
@@ -562,7 +593,9 @@ namespace Projet_S3_POO
             }
         }
         
-        //Display grid with answers in red
+        /// <summary>
+        /// Display grid with the answers
+        /// </summary>
         public void DisplayGridWithAnswers()
         {
             for (int i = 0; i < height; i++)
@@ -584,7 +617,10 @@ namespace Projet_S3_POO
             }
         }
         
-
+        /// <summary>
+        /// Load all words in the dictionaries
+        /// </summary>
+        /// <param name="lang"></param> Language of the dictionary
         public void LoadDictionnaries(int lang)
         {
             dictionnaires = new Dictionary<int, Dictionnaire>();
@@ -594,10 +630,14 @@ namespace Projet_S3_POO
             }
         }
         
-        //Get random world from dictionnary
+        /// <summary>
+        /// Get a random word from the dictionary
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
         public string GetRandomWorld(int min, int max)
         {
-            var rnd = new Random();
             if (min < 2)
             {
                 min = 2;
@@ -606,12 +646,14 @@ namespace Projet_S3_POO
             {
                 max = 15;
             }
-            var randomWorldLength = rnd.Next(min, max);
-            var randomWorldIndex = rnd.Next(0, dictionnaires[randomWorldLength].Count());
+            var randomWorldLength = Functions.GetRandomInt(min, max);
+            var randomWorldIndex = Functions.GetRandomInt(0, dictionnaires[randomWorldLength].Count());
             return dictionnaires[randomWorldLength].Get(randomWorldIndex);
         }
         
-        //Output save to csv
+        /// <summary>
+        /// Save game in a file
+        /// </summary>
         public void SaveGrid()
         {
             //Level of difficulty, height, width, words to find
@@ -633,7 +675,10 @@ namespace Projet_S3_POO
             }
             File.WriteAllText("../../save.csv", stringCsv);
         }
-        
+        /// <summary>
+        /// Load grid from csv
+        /// </summary>
+        /// <param name="path"></param> Path to csv file
         public void LoadSave(string path)
         {
             var save = File.ReadAllLines(path);
