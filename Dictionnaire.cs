@@ -115,9 +115,9 @@ namespace Projet_S3_POO
             return str;
         }
         /// <summary>
-        /// Search a word in the dictionary
+        /// Search a word in the dictionary 
         /// </summary>
-        /// <param name="word"></param> The word to search
+        /// <param name="word"></param> word:The word to search
         /// <returns></returns>
         public bool RechDichoRecursif(string word)
         {

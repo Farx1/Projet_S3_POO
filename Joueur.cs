@@ -54,7 +54,7 @@ namespace Projet_S3_POO
         /// </summary>
         public void DisplayScore()
         {
-            Console.WriteLine("Score : " + Score);
+            Console.Write(Score);
         }
 
         public void DisplayWordsfound()

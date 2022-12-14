@@ -13,6 +13,8 @@ namespace Projet_S3_POO
         private List<Plateau> archive;
         private int turn;
         private int currentPlayer;
+        private int langue;
+        private int difficulty;
         
         
         public Jeu(int lang, int difficulty)
@@ -21,6 +23,15 @@ namespace Projet_S3_POO
             joueur2 = new Joueur();
             plateau = new Plateau(difficulty, lang);
             archive = new List<Plateau>();
+            langue = lang;
+            this.difficulty = difficulty;    
+        }
+        
+        public void newGame()
+        {
+            archive.Add(plateau);
+            plateau = new Plateau(difficulty, langue);
+            
         }
 
 
@@ -35,7 +46,6 @@ namespace Projet_S3_POO
             DateTime end = DateTime.Now.AddMinutes(1);
             while (DateTime.Now < end)
             {
-                Console.WriteLine("      " + "Il vous reste " + (DateTime.Compare(end,DateTime.Now)) + " secondes");
                 Console.WriteLine("      "+"Tour du joueur " + currentPlayer);
                 Console.Write("      "+"Merci de rentrer un mot: ");
                 string mot = Console.ReadLine();
@@ -66,13 +76,10 @@ namespace Projet_S3_POO
                 if (plateau.CheckWordPosition(x, y, mot, direction)&& currentPlayer == 1)
                 {
                     @plateau.MarkWord(x, y, mot, direction);
-                    if (DateTime.Now >= end)
-                    {
-                        currentPlayer = 2;
-                    }
+                    
                     joueur1.AddScore(mot.Length);
                     joueur1.AddWord(mot);
-                    Console.WriteLine("      "+"Vous avez trouvé un mot !");
+                    Console.WriteLine("      "+"Vous avez trouvé un mot Joueur 1 !");
                     Console.Write("      "+"Appuyez sur une touche pour continuer");
                     Console.ReadKey();
                     Console.WriteLine("");
@@ -90,13 +97,10 @@ namespace Projet_S3_POO
                 if (plateau.CheckWordPosition(x, y, mot, direction)&& currentPlayer == 2)
                 {
                     @plateau.MarkWord(x, y, mot, direction);
-                    if (DateTime.Now >= end)
-                    {
-                        currentPlayer = 1;
-                    }
+                    
                     joueur2.AddScore(mot.Length);
                     joueur2.AddWord(mot);
-                    Console.WriteLine("      "+"Vous avez trouvé un mot !");
+                    Console.WriteLine("      "+"Vous avez trouvé un mot Joueur 2!");
                     Console.Write("      "+"Appuyez sur une touche pour continuer");
                     Console.ReadKey();
                     Console.WriteLine("");
@@ -108,11 +112,15 @@ namespace Projet_S3_POO
                     Console.ReadKey();
                     break;
                 }
-
-                Console.WriteLine("");
-                Console.Write("      "+"Appuyez sur une touche pour continuer votre tours");
-                Console.ReadKey();
                 break;
+            }
+            if (joueur1.wordsFound.Count() == plateau.WorldList.Count)
+            {
+                joueur1.AddScore(3);
+            }
+            if (joueur2.wordsFound.Count() == plateau.WorldList.Count)
+            {
+                joueur2.AddScore(3);
             }
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("");
@@ -126,24 +134,50 @@ namespace Projet_S3_POO
         public void Start()
         {
             currentPlayer = 1;
-            DateTime end = DateTime.Now.AddMinutes(15);
-            while (DateTime.Now < end &&
-                   (joueur1.wordsFound.Count() + joueur2.wordsFound.Count() < plateau.WorldList.Count))
+            DateTime end = DateTime.Now.AddMinutes(10);
+            int i = 0;
+            while (i<=6)
             {
-                Turn();
+                while (DateTime.Now < end && (joueur1.wordsFound.Count() < plateau.WorldList.Count))
+                {
+                    DateTime start = DateTime.Now.AddSeconds(60*difficulty);
+                    while (start > DateTime.Now)
+                    {
+                        Turn();
+                    }
+                }
+                Console.Clear();
+                currentPlayer = 2;
+                newGame();
+                while (DateTime.Now < end && (joueur2.wordsFound.Count() < plateau.WorldList.Count))
+                {
+                    DateTime start = DateTime.Now.AddSeconds(60*difficulty);
+                    while (start > DateTime.Now)
+                    {
+                        Turn();
+                    }
+                }
+                if(DateTime.Now>= end)break;
+                if(i!=5)difficulty++;
             }
-            Console.WriteLine("Le jeu est terminé !");
-            Console.WriteLine("Le joueur 1 a trouvé " + joueur1.wordsFound.Count() + " mots");
-            Console.WriteLine("Le joueur 2 a trouvé " + joueur2.wordsFound.Count() + " mots");
-            if (joueur1.Score > joueur2.Score) Console.WriteLine("Le joueur 1 a gagné !");
-            else if (joueur1.Score < joueur2.Score) Console.WriteLine("Le joueur 2 a gagné !");
-            else Console.WriteLine("Egalité !");
+            
+            Console.WriteLine("      "+"Le jeu est terminé !");
+            Console.WriteLine("      "+"Le joueur 1 a trouvé " + joueur1.wordsFound.Count() + " mots" + " pour un score de " + joueur1.Score);
+            Console.WriteLine("      "+"Le joueur 2 a trouvé " + joueur2.wordsFound.Count() + " mots" + " pour un score de " + joueur2.Score);
+            if (joueur1.Score > joueur2.Score)
+            {
+                Console.WriteLine("      "+"Le joueur 1 a gagné !");
+            }
+            else if (joueur1.Score < joueur2.Score)
+            {
+                Console.WriteLine("      "+"Le joueur 2 a gagné !");
+            }
+            else Console.WriteLine("      "+"Egalité !");
             
         }
 
         public static void Timer()
         {
-            //fais moi un programme qui affiche un timer en c# à une ligne donnée sans modifier le reste
             DateTime end = DateTime.Now.AddMinutes(1);
             while (DateTime.Now < end)
             {
