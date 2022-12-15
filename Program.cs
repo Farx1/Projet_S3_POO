@@ -64,20 +64,29 @@ namespace Projet_S3_POO
             Console.ResetColor();
             #endregion
             
+            Console.WriteLine("\n");
             Functions.InitRandom();
             //Menu for choosing language (English or French) and difficulty from 1 to 5
-            Console.Write("      ");
-            Console.Write("Choose your language 0 for English and 1 for French: ");
+            Console.Write("      "+"Choisissez votre langue (0 pour anglais, 1 pour français) : ");
             int language = Convert.ToInt32(Console.ReadLine());
-            Console.Write("      "); 
-            Console.Write("Choose your difficulty (1 to 5): ");
+            Console.Write("      "+"Choisissez la difficulté de la première partie (1-5): ");
             int difficulty = Convert.ToInt32(Console.ReadLine());
-            Console.Write("\n"+"      "+"You chose difficulty " + difficulty+"\n");
-            Console.Write("      ");
-            Console.Write("Press any key to continue: ");
+            //Console.Write("\n"+"      "+"Vous avez choisis la difficulté: " + difficulty+"\n");
+            
+            Console.Write("\n"+"      "+"Joueur 1: Entrez votre nom: ");
+            string name1 = Console.ReadLine();
+            Console.Write("      "+"Vous avez choisis " + name1+" comme nom de joueur.\n");
+            
+            Console.Write("\n"+"      "+"Joueur 2: Entrez votre nom: ");
+            string name2 = Console.ReadLine();
+            Console.Write("      "+"Vous avez choisis " + name2+" comme nom de joueur.\n\n");
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("      "+"Appuyez sur une touche pour commencer la partie!");
+            Console.ResetColor();
             Console.ReadKey();
             Console.Clear();
-            var jeu = new Jeu(language, difficulty);
+            var jeu = new Jeu(language, difficulty, name1, name2);
             jeu.Start();
         }
     }

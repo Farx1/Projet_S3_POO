@@ -10,8 +10,9 @@ namespace Projet_S3_POO
         private string[] history;
         
 
-        public Joueur()
+        public Joueur(string name)
         {
+            this.name = name;
             wordsFound = new List<string>();
             Score = 0;
         }
@@ -24,6 +25,12 @@ namespace Projet_S3_POO
             get => history;
             set => history = value;
         }
+
+        public object Name
+        {
+            get => name;
+        }
+
         /// <summary>
         /// Add the score to the player's score
         /// </summary>

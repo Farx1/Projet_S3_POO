@@ -17,10 +17,10 @@ namespace Projet_S3_POO
         private int difficulty;
         
         
-        public Jeu(int lang, int difficulty)
+        public Jeu(int lang, int difficulty,string name1, string name2)
         {
-            joueur1 = new Joueur();
-            joueur2 = new Joueur();
+            joueur1 = new Joueur(name1);
+            joueur2 = new Joueur(name2);
             plateau = new Plateau(difficulty, lang);
             archive = new List<Plateau>();
             langue = lang;
@@ -46,7 +46,7 @@ namespace Projet_S3_POO
             DateTime end = DateTime.Now.AddMinutes(1);
             while (DateTime.Now < end)
             {
-                Console.WriteLine("      "+"Tour du joueur " + currentPlayer);
+                Console.WriteLine("      "+"Tour de " + (currentPlayer == 1 ? joueur1.Name : joueur2.Name));
                 Console.Write("      "+"Merci de rentrer un mot: ");
                 string mot = Console.ReadLine();
                 
@@ -79,7 +79,7 @@ namespace Projet_S3_POO
                     
                     joueur1.AddScore(mot.Length);
                     joueur1.AddWord(mot);
-                    Console.WriteLine("      "+"Vous avez trouvé un mot Joueur 1 !");
+                    Console.WriteLine("      "+"Vous avez trouvé un mot "+(currentPlayer == 1 ? joueur1.Name : joueur2.Name)+" !");
                     Console.Write("      "+"Appuyez sur une touche pour continuer");
                     Console.ReadKey();
                     Console.WriteLine("");
@@ -88,7 +88,7 @@ namespace Projet_S3_POO
                 }
                 else if(currentPlayer !=2)
                 {
-                    Console.WriteLine("      "+"Le mot n'est pas valide");
+                    Console.WriteLine("      "+"Le mot n'est pas valide"+(currentPlayer == 1 ? joueur1.Name : joueur2.Name)+"dommage...");
                     Console.Write("      "+"Appuyez sur une touche pour continuer");
                     Console.ReadKey();
                     break;
@@ -100,14 +100,14 @@ namespace Projet_S3_POO
                     
                     joueur2.AddScore(mot.Length);
                     joueur2.AddWord(mot);
-                    Console.WriteLine("      "+"Vous avez trouvé un mot Joueur 2!");
+                    Console.WriteLine("      "+"Vous avez trouvé un mot "+(currentPlayer == 1 ? joueur1.Name : joueur2.Name)+" !");
                     Console.Write("      "+"Appuyez sur une touche pour continuer");
                     Console.ReadKey();
                     Console.WriteLine("");
                 }
                 else if(currentPlayer != 1)
                 {
-                    Console.WriteLine("      "+"Le mot n'est pas valide");
+                    Console.WriteLine("      "+"Le mot n'est pas valide"+(currentPlayer == 1 ? joueur1.Name : joueur2.Name)+"dommage...");
                     Console.Write("      "+"Appuyez sur une touche pour continuer");
                     Console.ReadKey();
                     break;
@@ -134,7 +134,7 @@ namespace Projet_S3_POO
         public void Start()
         {
             currentPlayer = 1;
-            DateTime end = DateTime.Now.AddMinutes(10);
+            DateTime end = DateTime.Now.AddMinutes(1);
             int i = 0;
             while (i<=6)
             {
@@ -160,20 +160,70 @@ namespace Projet_S3_POO
                 if(DateTime.Now>= end)break;
                 if(i!=5)difficulty++;
             }
-            
-            Console.WriteLine("      "+"Le jeu est terminé !");
-            Console.WriteLine("      "+"Le joueur 1 a trouvé " + joueur1.wordsFound.Count() + " mots" + " pour un score de " + joueur1.Score);
-            Console.WriteLine("      "+"Le joueur 2 a trouvé " + joueur2.wordsFound.Count() + " mots" + " pour un score de " + joueur2.Score);
+            Console.WriteLine("\n" + "\n" + "\n");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("      "+"Le jeu est terminé !"+"\n");
+            Console.ResetColor();
+            Console.WriteLine("      "+ joueur1.Name +" a trouvé " + joueur1.wordsFound.Count() + " mots" + " pour un score de " + joueur1.Score);
+            Console.WriteLine("");
+            Console.WriteLine("      "+ joueur2.Name +" a trouvé " + joueur2.wordsFound.Count() + " mots" + " pour un score de " + joueur2.Score);
+            Console.WriteLine("");
+
             if (joueur1.Score > joueur2.Score)
             {
-                Console.WriteLine("      "+"Le joueur 1 a gagné !");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("      "+ joueur1.Name +" a gagné !");
+                Console.ResetColor();
+                Console.WriteLine("");
+
             }
             else if (joueur1.Score < joueur2.Score)
             {
-                Console.WriteLine("      "+"Le joueur 2 a gagné !");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("      "+ joueur2.Name +" a gagné !");
+                Console.ResetColor();
+                Console.WriteLine("");
+
             }
             else Console.WriteLine("      "+"Egalité !");
-            
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("      "+"Appuyez sur une touche pour terminer le jeu:");
+            Console.ReadKey();
+            Console.ResetColor();
+            Console.Clear();
+            Console.WriteLine("\n" + "\n" + "\n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            #region Merci d'avoir Joué au jeu
+            Console.Write("            ████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████"+"\n"+
+                          "            █░░░░░░██████████░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░░░███░░░░░░░░░░░░░░█░░░░░░░░░░████░░░░░░░░░░░░███░░░░░░█░░░░░░░░░░░░░░█░░░░░░██░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░█░░░░░░░░░░░░░░░░███"+"\n"+
+                          "            █░░▄▀░░░░░░░░░░░░░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀▄▀░░███░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀░░████░░▄▀▄▀▄▀▄▀░░░░█░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀▄▀░░███"+"\n"+
+                          "            █░░▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░░░░░░░░░█░░▄▀░░░░░░░░▄▀░░███░░▄▀░░░░░░░░░░█░░░░▄▀░░░░████░░▄▀░░░░▄▀▄▀░░█░░░░░░█░░▄▀░░░░░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░░░░░▄▀░░█░░░░▄▀░░░░█░░▄▀░░░░░░░░▄▀░░███"+"\n"+
+                          "            █░░▄▀░░░░░░▄▀░░░░░░▄▀░░█░░▄▀░░█████████░░▄▀░░████░░▄▀░░███░░▄▀░░███████████░░▄▀░░██████░░▄▀░░██░░▄▀░░█████░░█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░███░░▄▀░░███░░▄▀░░████░░▄▀░░███"+"\n"+
+                          "            █░░▄▀░░██░░▄▀░░██░░▄▀░░█░░▄▀░░░░░░░░░░█░░▄▀░░░░░░░░▄▀░░███░░▄▀░░███████████░░▄▀░░██████░░▄▀░░██░░▄▀░░████████░░▄▀░░░░░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░███░░▄▀░░███░░▄▀░░░░░░░░▄▀░░███"+"\n"+
+                          "            █░░▄▀░░██░░▄▀░░██░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀▄▀░░███░░▄▀░░███████████░░▄▀░░██████░░▄▀░░██░░▄▀░░████████░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░███░░▄▀░░███░░▄▀▄▀▄▀▄▀▄▀▄▀░░███"+"\n"+
+                          "            █░░▄▀░░██░░░░░░██░░▄▀░░█░░▄▀░░░░░░░░░░█░░▄▀░░░░░░▄▀░░░░███░░▄▀░░███████████░░▄▀░░██████░░▄▀░░██░░▄▀░░████████░░▄▀░░░░░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░███░░▄▀░░███░░▄▀░░░░░░▄▀░░░░███"+"\n"+
+                          "            █░░▄▀░░██████████░░▄▀░░█░░▄▀░░█████████░░▄▀░░██░░▄▀░░█████░░▄▀░░███████████░░▄▀░░██████░░▄▀░░██░░▄▀░░████████░░▄▀░░██░░▄▀░░█░░▄▀▄▀░░▄▀▄▀░░█░░▄▀░░██░░▄▀░░███░░▄▀░░███░░▄▀░░██░░▄▀░░█████"+"\n"+
+                          "            █░░▄▀░░██████████░░▄▀░░█░░▄▀░░░░░░░░░░█░░▄▀░░██░░▄▀░░░░░░█░░▄▀░░░░░░░░░░█░░░░▄▀░░░░████░░▄▀░░░░▄▀▄▀░░████████░░▄▀░░██░░▄▀░░█░░░░▄▀▄▀▄▀░░░░█░░▄▀░░░░░░▄▀░░█░░░░▄▀░░░░█░░▄▀░░██░░▄▀░░░░░░█"+"\n"+
+                          "            █░░▄▀░░██████████░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██░░▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀░░████░░▄▀▄▀▄▀▄▀░░░░████████░░▄▀░░██░░▄▀░░███░░░░▄▀░░░░███░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀░░█░░▄▀░░██░░▄▀▄▀▄▀░░█"+"\n"+
+                          "            █░░░░░░██████████░░░░░░█░░░░░░░░░░░░░░█░░░░░░██░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░████░░░░░░░░░░░░██████████░░░░░░██░░░░░░█████░░░░░░█████░░░░░░░░░░░░░░█░░░░░░░░░░█░░░░░░██░░░░░░░░░░█"+"\n"+
+                          "            ████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████"+"\n"+
+                          "            ████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████"+"\n"+
+                          "            █████████████████████████░░░░░░█░░░░░░░░░░░░░░█░░░░░░██░░░░░░█░░░░░░░░░░░░░░████░░░░░░░░░░░░░░█░░░░░░██░░░░░░████████████░░░░░░█░░░░░░░░░░░░░░█░░░░░░██░░░░░░███████████████████████████"+"\n"+
+                          "            █████████████████████████░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░████░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██░░▄▀░░████████████░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██░░▄▀░░███████████████████████████"+"\n"+
+                          "            █████████████████████████░░▄▀░░█░░▄▀░░░░░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░░░░░░░░░████░░▄▀░░░░░░▄▀░░█░░▄▀░░██░░▄▀░░████████████░░▄▀░░█░░▄▀░░░░░░░░░░█░░▄▀░░██░░▄▀░░███████████████████████████"+"\n"+
+                          "            █████████████████████████░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░████████████░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░████████████░░▄▀░░█░░▄▀░░█████████░░▄▀░░██░░▄▀░░███████████████████████████"+"\n"+
+                          "            █████████████████████████░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░░░░░░░░░████░░▄▀░░░░░░▄▀░░█░░▄▀░░██░░▄▀░░████████████░░▄▀░░█░░▄▀░░░░░░░░░░█░░▄▀░░██░░▄▀░░███████████████████████████"+"\n"+
+                          "            █████████████████████████░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░████░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██░░▄▀░░████████████░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██░░▄▀░░███████████████████████████"+"\n"+
+                          "            █████████████████░░░░░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░░░░░░░░░████░░▄▀░░░░░░▄▀░░█░░▄▀░░██░░▄▀░░████░░░░░░██░░▄▀░░█░░▄▀░░░░░░░░░░█░░▄▀░░██░░▄▀░░███████████████████████████"+"\n"+
+                          "            █████████████████░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░████████████░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░████░░▄▀░░██░░▄▀░░█░░▄▀░░█████████░░▄▀░░██░░▄▀░░███████████████████████████"+"\n"+
+                          "            █████████████████░░▄▀░░░░░░▄▀░░█░░▄▀░░░░░░▄▀░░█░░▄▀░░░░░░▄▀░░█░░▄▀░░░░░░░░░░████░░▄▀░░██░░▄▀░░█░░▄▀░░░░░░▄▀░░████░░▄▀░░░░░░▄▀░░█░░▄▀░░░░░░░░░░█░░▄▀░░░░░░▄▀░░███████████████████████████"+"\n"+
+                          "            █████████████████░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░████░░▄▀░░██░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░████░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░███████████████████████████"+"\n"+
+                          "            █████████████████░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░████░░░░░░██░░░░░░█░░░░░░░░░░░░░░████░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░███████████████████████████"+"\n"+
+                          "            ████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████"+"\n");
+            #endregion
+            Console.ResetColor();
+
         }
 
         public static void Timer()
