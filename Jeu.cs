@@ -88,7 +88,7 @@ namespace Projet_S3_POO
                 }
                 else if(currentPlayer !=2)
                 {
-                    Console.WriteLine("      "+"Le mot n'est pas valide"+(currentPlayer == 1 ? joueur1.Name : joueur2.Name)+"dommage...");
+                    Console.WriteLine("      "+"Le mot n'est pas valide "+(currentPlayer == 1 ? joueur1.Name : joueur2.Name)+" dommage...");
                     Console.Write("      "+"Appuyez sur une touche pour continuer");
                     Console.ReadKey();
                     break;
@@ -107,7 +107,7 @@ namespace Projet_S3_POO
                 }
                 else if(currentPlayer != 1)
                 {
-                    Console.WriteLine("      "+"Le mot n'est pas valide"+(currentPlayer == 1 ? joueur1.Name : joueur2.Name)+"dommage...");
+                    Console.WriteLine("      "+"Le mot n'est pas valide "+(currentPlayer == 1 ? joueur1.Name : joueur2.Name)+" dommage...");
                     Console.Write("      "+"Appuyez sur une touche pour continuer");
                     Console.ReadKey();
                     break;
